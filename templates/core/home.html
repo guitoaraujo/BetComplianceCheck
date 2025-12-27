@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}BetComplianceCheck{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-2">Avalie criativos de apostas esportivas (Brasil) em segundos</h1>
+                <p class="text-secondary mb-3">
+                    Faça upload de uma imagem de anúncio e receba alertas claros sobre riscos de conformidade com o
+                    CONAR.
+                </p>
+
+                <div class="d-flex gap-2">
+                    <a href="/analyze/" class="btn btn-primary">Começar análise</a>
+                    <a href="/terms/" class="btn btn-outline-secondary">Entender limites</a>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <div class="fw-semibold">Visual-first</div>
+                            <div class="muted-small">Resultados em cards, sem juridiquês.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <div class="fw-semibold">Rápido</div>
+                            <div class="muted-small">Ideal para revisar muitos criativos.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <div class="fw-semibold">Ação</div>
+                            <div class="muted-small">Cada alerta traz “como corrigir”.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="h6">O que checamos no MVP (CONAR)</h2>
+                <ul class="mb-0 text-secondary">
+                    <li>Promessa de ganho fácil/garantido</li>
+                    <li>Glamourização de riqueza/sucesso</li>
+                    <li>Pressão emocional / urgência enganosa</li>
+                    <li>Apelo a menores / estética infantil</li>
+                    <li>Avisos: “Aposte com responsabilidade” e “Proibido para menores de 18 anos”</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="alert alert-warning mt-3">
+            <strong>Nota:</strong> esta ferramenta apoia decisões e não substitui revisão humana.
+        </div>
+    </div>
+</div>
+{% endblock %}

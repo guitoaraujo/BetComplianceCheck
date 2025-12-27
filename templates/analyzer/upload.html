@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Analisar criativo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h5 mb-1">Analisar imagem</h1>
+                <p class="text-secondary mb-4">Envie um criativo (JPG/PNG/WEBP). O CONAR é avaliado automaticamente.</p>
+
+                <form method="post" enctype="multipart/form-data" class="d-grid gap-3">
+                    {% csrf_token %}
+                    <div>
+                        <label class="form-label">Imagem do anúncio</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                        <div class="text-danger small mt-1">{{ form.image.errors }}</div>
+                        {% endif %}
+                        <div class="form-text">Tamanho máximo: 8MB.</div>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg" type="submit">Analisar conformidade</button>
+
+                    <div class="alert alert-info mb-0">
+                        Dica: evite enviar imagens com dados pessoais (nomes, telefones, documentos).
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
