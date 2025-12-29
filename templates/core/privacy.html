@@ -1,38 +1,66 @@
 {% extends "base.html" %}
 {% block title %}Política de Privacidade{% endblock %}
 {% block content %}
-<div class="card shadow-sm">
-    <div class="card-body p-4">
-        <h1 class="h5">Política de Privacidade</h1>
-        <p class="text-secondary">
-            Esta política descreve como os dados são tratados ao utilizar o BetComplianceCheck, em conformidade com
-            princípios da LGPD.
-        </p>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg p-3">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-5">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 50px; height: 50px;">
+                        <i class="bi bi-shield-lock-fill fs-4"></i>
+                    </div>
+                    <h1 class="h3 fw-bold mb-2">Política de Privacidade</h1>
+                    <p class="text-secondary">Seus dados estão seguros conosco.</p>
+                </div>
 
-        <h2 class="h6 mt-4">Dados coletados</h2>
-        <ul class="text-secondary">
-            <li>Imagem enviada para análise (criativo publicitário)</li>
-            <li>Metadados técnicos (ex: tamanho do arquivo, data/hora da análise)</li>
-        </ul>
+                <div class="prose">
+                    <p class="lead text-secondary mb-4">
+                        Esta política descreve como os dados são tratados ao utilizar o BetComplianceCheck, em
+                        conformidade com
+                        princípios da LGPD.
+                    </p>
 
-        <h2 class="h6 mt-4">Finalidade</h2>
-        <p class="text-secondary">
-            Usamos os dados para executar a análise de conformidade e apresentar resultados. Podemos armazenar
-            resultados para melhorar
-            a qualidade do sistema, sempre evitando dados pessoais desnecessários.
-        </p>
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">Dados coletados</h2>
+                    <ul class="text-secondary list-unstyled d-grid gap-2">
+                        <li class="d-flex gap-2">
+                            <i class="bi bi-check2 text-success mt-1"></i>
+                            Imagem enviada para análise (criativo publicitário)
+                        </li>
+                        <li class="d-flex gap-2">
+                            <i class="bi bi-check2 text-success mt-1"></i>
+                            Metadados técnicos (ex: tamanho do arquivo, data/hora da análise)
+                        </li>
+                    </ul>
 
-        <h2 class="h6 mt-4">Base legal</h2>
-        <p class="text-secondary">
-            Tratamento fundamentado em legítimo interesse e execução do serviço solicitado pelo usuário, observando os
-            princípios da LGPD.
-        </p>
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">Finalidade</h2>
+                    <p class="text-secondary">
+                        Usamos os dados para executar a análise de conformidade e apresentar resultados. Podemos
+                        armazenar
+                        resultados para melhorar
+                        a qualidade do sistema, sempre evitando dados pessoais desnecessários.
+                    </p>
 
-        <h2 class="h6 mt-4">Direitos do titular e contato</h2>
-        <p class="text-secondary">
-            Para solicitações relacionadas a dados, entre em contato pelo canal indicado na aplicação (a definir no
-            MVP).
-        </p>
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">Base legal</h2>
+                    <p class="text-secondary">
+                        Tratamento fundamentado em legítimo interesse e execução do serviço solicitado pelo usuário,
+                        observando os
+                        princípios da LGPD.
+                    </p>
+
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">Direitos do titular e contato</h2>
+                    <p class="text-secondary">
+                        Para solicitações relacionadas a dados, entre em contato pelo canal indicado na aplicação (a
+                        definir no
+                        MVP).
+                    </p>
+                </div>
+
+                <div class="mt-5 pt-4 border-top text-center">
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary px-4">Voltar para Home</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

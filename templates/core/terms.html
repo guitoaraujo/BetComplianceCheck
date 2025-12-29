@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Termos e Condições{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg p-3">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-5">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 50px; height: 50px;">
+                        <i class="bi bi-file-text-fill fs-4"></i>
+                    </div>
+                    <h1 class="h3 fw-bold mb-2">Termos e Condições</h1>
+                    <p class="text-secondary">Última atualização: Dezembro 2025</p>
+                </div>
+
+                <div class="prose">
+                    <p class="lead text-secondary mb-4">
+                        O BetComplianceCheck é uma ferramenta informacional e educacional de apoio à análise de
+                        conformidade
+                        de materiais publicitários. Ele não fornece aconselhamento jurídico e não substitui revisão
+                        humana.
+                    </p>
+
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">
+                        <i class="bi bi-exclamation-triangle me-2 text-warning"></i>Limitação de responsabilidade
+                    </h2>
+                    <p class="text-secondary">
+                        Os resultados são gerados de forma automatizada e podem conter imprecisões. A decisão final de
+                        publicação
+                        e a responsabilidade pelo conteúdo são do usuário.
+                    </p>
+
+                    <h2 class="h5 fw-bold text-dark mt-5 mb-3">
+                        <i class="bi bi-check-circle me-2 text-success"></i>Uso permitido
+                    </h2>
+                    <ul class="text-secondary list-unstyled d-grid gap-2">
+                        <li class="d-flex gap-2">
+                            <i class="bi bi-dot fs-4 text-purple mt-n2"></i>
+                            <span>Você concorda em não usar a ferramenta para finalidades ilícitas ou abusivas.</span>
+                        </li>
+                        <li class="d-flex gap-2">
+                            <i class="bi bi-dot fs-4 text-purple mt-n2"></i>
+                            <span>Você é responsável por garantir que possui direitos de uso das imagens
+                                enviadas.</span>
+                        </li>
+                        <li class="d-flex gap-2">
+                            <i class="bi bi-dot fs-4 text-purple mt-n2"></i>
+                            <span>Não envie dados pessoais sensíveis ou conteúdos não relacionados.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-5 pt-4 border-top text-center">
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary px-4">Voltar para Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,28 +2,41 @@
 {% block title %}Analisar criativo{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h5 mb-1">Analisar imagem</h1>
-                <p class="text-secondary mb-4">Envie um criativo (JPG/PNG/WEBP). O CONAR é avaliado automaticamente.</p>
+<div class="row justify-content-center py-5">
+    <div class="col-lg-6 col-md-8">
+        <div class="card h-100">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 64px; height: 64px;">
+                        <i class="bi bi-cloud-arrow-up-fill fs-3"></i>
+                    </div>
+                    <h1 class="h3 fw-bold">Nova Análise</h1>
+                    <p class="text-secondary">Envie seu criativo para validar a conformidade com o CONAR.</p>
+                </div>
 
-                <form method="post" enctype="multipart/form-data" class="d-grid gap-3">
+                <form method="post" enctype="multipart/form-data" class="d-grid gap-4">
                     {% csrf_token %}
                     <div>
-                        <label class="form-label">Imagem do anúncio</label>
-                        {{ form.image }}
+                        <label class="form-label fw-medium">Imagem do anúncio</label>
+                        <div class="input-group">
+                            {{ form.image }}
+                        </div>
                         {% if form.image.errors %}
                         <div class="text-danger small mt-1">{{ form.image.errors }}</div>
                         {% endif %}
-                        <div class="form-text">Tamanho máximo: 8MB.</div>
+                        <div class="form-text mt-2">Suporta JPG, PNG e WEBP até 8MB.</div>
                     </div>
 
-                    <button class="btn btn-primary btn-lg" type="submit">Analisar conformidade</button>
+                    <button class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow-sm" type="submit">
+                        <i class="bi bi-search me-2"></i>Analisar Conformidade
+                    </button>
 
-                    <div class="alert alert-info mb-0">
-                        Dica: evite enviar imagens com dados pessoais (nomes, telefones, documentos).
+                    <div class="bg-light rounded p-3 d-flex gap-3 align-items-start small text-muted border">
+                        <i class="bi bi-shield-lock-fill text-purple fs-5"></i>
+                        <div>
+                            Dica: evite enviar imagens com dados pessoais sensíveis (CPFs, cartões de crédito, etc).
+                        </div>
                     </div>
                 </form>
             </div>

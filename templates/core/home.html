@@ -1,65 +1,122 @@
 {% extends "base.html" %}
-{% block title %}BetComplianceCheck{% endblock %}
+{% block title %}BetComplianceCheck - Validação Publicitária{% endblock %}
 
 {% block content %}
-<div class="row g-3">
-    <div class="col-lg-7">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h4 mb-2">Avalie criativos de apostas esportivas (Brasil) em segundos</h1>
-                <p class="text-secondary mb-3">
-                    Faça upload de uma imagem de anúncio e receba alertas claros sobre riscos de conformidade com o
-                    CONAR.
-                </p>
+<!-- Hero Section -->
+<div class="row g-0 justify-content-center mb-5"
+    style="margin-left: calc(var(--bs-gutter-x) * -.5); margin-right: calc(var(--bs-gutter-x) * -.5);">
+    <div class="col-12 bg-purple text-white py-5 px-4 mb-4"
+        style="background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-purple-dark) 100%);">
+        <div class="container py-5 text-center">
+            <h1 class="display-4 fw-bold mb-4">Sua Publicidade de Apostas, <br class="d-none d-md-block">100% Conforme.
+            </h1>
+            <p class="lead mb-5 opacity-90 mx-auto" style="max-width: 700px;">
+                Analise seus criativos instantaneamente com nossa IA especializada nas diretrizes do CONAR.
+                Evite multas e proteja sua marca.
+            </p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{% url 'analyze' %}" class="btn btn-light text-purple fw-bold btn-lg px-5 shadow-sm">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Começar Análise Gratuita
+                </a>
+                <a href="{% url 'terms' %}" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-book me-2"></i>Saiba Mais
+                </a>
+            </div>
 
-                <div class="d-flex gap-2">
-                    <a href="/analyze/" class="btn btn-primary">Começar análise</a>
-                    <a href="/terms/" class="btn btn-outline-secondary">Entender limites</a>
+            <div class="mt-5 opacity-75 small">
+                <i class="bi bi-shield-check me-1"></i> Análise segura e privada
+                <span class="mx-2">•</span>
+                <i class="bi bi-lightning-charge me-1"></i> Resultado em segundos
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row g-4 mb-5">
+        <!-- Feature 1 -->
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <div class="card-body">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 64px; height: 64px;">
+                        <i class="bi bi-eye fs-3"></i>
+                    </div>
+                    <h3 class="h5 fw-bold mb-3">Visual First</h3>
+                    <p class="text-secondary mb-0">Nossa IA "vê" como um humano. Analisamos textos, imagens e contextos
+                        visuais para identificar riscos reais.</p>
                 </div>
+            </div>
+        </div>
 
-                <hr class="my-4">
-
-                <div class="row g-2">
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <div class="fw-semibold">Visual-first</div>
-                            <div class="muted-small">Resultados em cards, sem juridiquês.</div>
-                        </div>
+        <!-- Feature 2 -->
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <div class="card-body">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 64px; height: 64px;">
+                        <i class="bi bi-file-earmark-medical fs-3"></i>
                     </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <div class="fw-semibold">Rápido</div>
-                            <div class="muted-small">Ideal para revisar muitos criativos.</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <div class="fw-semibold">Ação</div>
-                            <div class="muted-small">Cada alerta traz “como corrigir”.</div>
-                        </div>
-                    </div>
+                    <h3 class="h5 fw-bold mb-3">Critérios CONAR</h3>
+                    <p class="text-secondary mb-0">Verificamos promessas de ganho, apelo a menores e avisos obrigatórios
+                        ("Jogue com responsabilidade").</p>
                 </div>
+            </div>
+        </div>
 
+        <!-- Feature 3 -->
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <div class="card-body">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 text-purple rounded-circle mb-4"
+                        style="width: 64px; height: 64px;">
+                        <i class="bi bi-check-circle fs-3"></i>
+                    </div>
+                    <h3 class="h5 fw-bold mb-3">Ação Imediata</h3>
+                    <p class="text-secondary mb-0">Não apenas apontamos o erro, explicamos <span
+                            class="fw-semibold">como corrigir</span> para você aprovar sua campanha mais rápido.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-5">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h2 class="h6">O que checamos no MVP (CONAR)</h2>
-                <ul class="mb-0 text-secondary">
-                    <li>Promessa de ganho fácil/garantido</li>
-                    <li>Glamourização de riqueza/sucesso</li>
-                    <li>Pressão emocional / urgência enganosa</li>
-                    <li>Apelo a menores / estética infantil</li>
-                    <li>Avisos: “Aposte com responsabilidade” e “Proibido para menores de 18 anos”</li>
-                </ul>
-            </div>
-        </div>
+    <!-- How it Works -->
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-lg-8 text-center">
+            <h2 class="h3 fw-bold mb-5">Como Funciona</h2>
 
-        <div class="alert alert-warning mt-3">
-            <strong>Nota:</strong> esta ferramenta apoia decisões e não substitui revisão humana.
+            <div class="d-flex flex-column flex-md-row gap-4 justify-content-center align-items-center">
+                <div class="d-flex flex-column align-items-center position-relative">
+                    <span class="badge bg-purple rounded-pill fs-5 mb-3 px-3 py-2">1</span>
+                    <h4 class="h6 fw-bold">Upload</h4>
+                    <p class="small text-secondary" style="max-width: 200px;">Envie a imagem do seu anúncio (JPG, PNG).
+                    </p>
+                </div>
+
+                <div class="d-none d-md-block border-top border-2 flex-grow-1 mx-3 mb-5 opacity-25"
+                    style="border-style: dashed !important; max-width: 100px;"></div>
+
+                <div class="d-flex flex-column align-items-center">
+                    <span class="badge bg-purple rounded-pill fs-5 mb-3 px-3 py-2">2</span>
+                    <h4 class="h6 fw-bold">Análise AI</h4>
+                    <p class="small text-secondary" style="max-width: 200px;">Processamento inteligente em poucos
+                        segundos.</p>
+                </div>
+
+                <div class="d-none d-md-block border-top border-2 flex-grow-1 mx-3 mb-5 opacity-25"
+                    style="border-style: dashed !important; max-width: 100px;"></div>
+
+                <div class="d-flex flex-column align-items-center">
+                    <span class="badge bg-purple rounded-pill fs-5 mb-3 px-3 py-2">3</span>
+                    <h4 class="h6 fw-bold">Relatório</h4>
+                    <p class="small text-secondary" style="max-width: 200px;">Receba o diagnóstico completo e
+                        orientações.</p>
+                </div>
+            </div>
+
+            <a href="{% url 'analyze' %}" class="btn btn-primary btn-lg px-5 mt-5 shadow">
+                Testar Agora
+            </a>
         </div>
     </div>
 </div>
