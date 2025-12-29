@@ -6,7 +6,7 @@ from django.conf import settings
 
 from .forms import AnalysisUploadForm
 from .models import Analysis
-from .services.conar_engine import analyze_conar_image
+from .services.conar_engine import analyze_conar_image_from_file
 
 def _absolute_image_url(request, analysis: Analysis) -> str:
     """
@@ -24,10 +24,13 @@ def upload_and_analyze(request):
             analysis.save()  # save first so image has a URL
 
             model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-            image_url = _absolute_image_url(request, analysis)
+            image_path = analysis.image.path
 
             try:
-                result = analyze_conar_image(image_url=image_url, model=model)
+                result = analyze_conar_image_from_file(
+                    image_path=image_path,
+                    model=model,
+                )
                 analysis.global_status = result.get("global", {}).get("status", "yellow")
                 analysis.result_json = result
             except Exception as e:

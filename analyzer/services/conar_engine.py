@@ -1,15 +1,14 @@
 import os
+import base64
+import mimetypes
+import json
 from openai import OpenAI
 
 from .conar_schema import CONAR_SCHEMA
 
-
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
 if not OPENAI_API_KEY:
-    raise RuntimeError(
-        "OPENAI_API_KEY not found. Check your .env file and load_dotenv configuration."
-    )
+    raise RuntimeError("OPENAI_API_KEY not found. Check your .env loading.")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -30,11 +29,19 @@ Regras principais para checar em criativos (imagem):
 Saída: responda SOMENTE no formato JSON conforme o schema fornecido.
 """
 
-def analyze_conar_image(image_url: str, model: str) -> dict:
-    """
-    image_url: URL acessível da imagem (em dev: MEDIA_URL com DEBUG; em prod: URL pública/S3/R2).
-    Returns: dict conforme CONAR_SCHEMA
-    """
+def _image_path_to_data_url(image_path: str) -> str:
+    mime_type, _ = mimetypes.guess_type(image_path)
+    if not mime_type:
+        mime_type = "image/png"
+
+    with open(image_path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("utf-8")
+
+    return f"data:{mime_type};base64,{b64}"
+
+def analyze_conar_image_from_file(image_path: str, model: str) -> dict:
+    image_data_url = _image_path_to_data_url(image_path)
+
     prompt = """
 Analise a imagem como criativo publicitário de casa de apostas.
 1) Identifique texto e mensagens implícitas.
@@ -58,20 +65,18 @@ Critérios de status:
                 "role": "user",
                 "content": [
                     {"type": "input_text", "text": prompt},
-                    {"type": "input_image", "image_url": image_url},
+                    {"type": "input_image", "image_url": image_data_url},
                 ],
             },
         ],
         text={
             "format": {
                 "type": "json_schema",
-                "json_schema": CONAR_SCHEMA,
+                "name": "conar_image_compliance_result",
+                "strict": True,
+                "schema": CONAR_SCHEMA["schema"],
             }
         },
     )
 
-    # The SDK returns structured content; safest is to read output_text then json-load is unnecessary
-    # because structured outputs are guaranteed to match schema.
-    # Still, response.output_text is JSON string. We'll parse it.
-    import json
     return json.loads(response.output_text)
