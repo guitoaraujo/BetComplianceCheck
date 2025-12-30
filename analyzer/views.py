@@ -95,6 +95,7 @@ def analysis_detail(request, pk: int):
     cards = result.get("cards", [])
     global_data = result.get("global", {})
 
+    return render(
         request,
         "analyzer/detail.html",
         {"analysis": analysis, "global_data": global_data, "cards": cards, "result": result},
