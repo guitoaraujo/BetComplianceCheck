@@ -23,7 +23,7 @@ def upload_and_analyze(request):
             analysis: Analysis = form.save(commit=False)
             analysis.save()  # save first so image has a URL
 
-            model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+            model = os.getenv("OPENAI_MODEL", "gpt-4o")
             image_path = analysis.image.path
 
             try:
