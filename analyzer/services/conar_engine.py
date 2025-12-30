@@ -7,10 +7,9 @@ from openai import OpenAI
 from .conar_schema import CONAR_SCHEMA
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise RuntimeError("OPENAI_API_KEY not found. Check your .env loading.")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+# Removed global client init to prevent startup crash if key is missing
+# client = OpenAI(api_key=OPENAI_API_KEY)
 
 SYSTEM_RULES = """
 Você é um analisador de conformidade para publicidade de apostas esportivas no Brasil.
@@ -57,26 +56,37 @@ Critérios de status:
 - red: violações fortes (promessa de ganho garantido, apelo a menores, minimização grave de risco).
 """
 
-    response = client.responses.create(
-        model=model,
-        input=[
+    if not OPENAI_API_KEY:
+        raise RuntimeError("OPENAI_API_KEY not found. Please set it in your environment variables.")
+
+    client = OpenAI(api_key=OPENAI_API_KEY)
+
+    response = client.chat.completions.create(
+        model=model or "gpt-4o",
+        messages=[
             {"role": "system", "content": SYSTEM_RULES},
             {
                 "role": "user",
                 "content": [
-                    {"type": "input_text", "text": prompt},
-                    {"type": "input_image", "image_url": image_data_url},
+                    {"type": "text", "text": prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": image_data_url
+                        }
+                    },
                 ],
             },
         ],
-        text={
-            "format": {
-                "type": "json_schema",
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
                 "name": "conar_image_compliance_result",
                 "strict": True,
-                "schema": CONAR_SCHEMA["schema"],
+                "schema": CONAR_SCHEMA["schema"]
             }
         },
+        max_tokens=2000,
     )
 
-    return json.loads(response.output_text)
+    return json.loads(response.choices[0].message.content)
