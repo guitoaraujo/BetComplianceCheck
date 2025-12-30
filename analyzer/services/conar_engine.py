@@ -89,4 +89,10 @@ Critérios de status:
         max_tokens=2000,
     )
 
-    return json.loads(response.choices[0].message.content)
+    analysis_result = json.loads(response.choices[0].message.content)
+    
+    # Return both the result and the data URL
+    return {
+        "result": analysis_result,
+        "image_data_url": image_data_url
+    }

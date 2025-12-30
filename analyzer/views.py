@@ -31,10 +31,17 @@ def upload_and_analyze(request):
                 image_path = analysis.image.path
 
                 # 3. Call AI Engine
-                result = analyze_conar_image_from_file(
+                service_response = analyze_conar_image_from_file(
                     image_path=image_path,
                     model=model,
                 )
+                
+                result = service_response.get("result", {})
+                image_data_url = service_response.get("image_data_url")
+
+                # Inject data URL into the result so frontend can use it even if file is gone
+                if image_data_url:
+                    result["cached_image_url"] = image_data_url
                 
                 # 4. Success handling
                 analysis.global_status = result.get("global", {}).get("status", "yellow")
@@ -88,8 +95,7 @@ def analysis_detail(request, pk: int):
     cards = result.get("cards", [])
     global_data = result.get("global", {})
 
-    return render(
         request,
         "analyzer/detail.html",
-        {"analysis": analysis, "global_data": global_data, "cards": cards},
+        {"analysis": analysis, "global_data": global_data, "cards": cards, "result": result},
     )

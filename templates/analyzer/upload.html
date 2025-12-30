@@ -43,4 +43,26 @@
         </div>
     </div>
 </div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay"
+    class="position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 d-none justify-content-center align-items-center"
+    style="z-index: 1050; backdrop-filter: blur(5px);">
+    <div class="text-center">
+        <div class="spinner-border text-purple mb-3" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h4 class="fw-bold text-dark">Analisando com IA...</h4>
+        <p class="text-secondary">Isso pode levar alguns segundos.</p>
+    </div>
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function () {
+        if (this.checkValidity()) {
+            document.getElementById('loadingOverlay').classList.remove('d-none');
+            document.getElementById('loadingOverlay').classList.add('d-flex');
+        }
+    });
+</script>
 {% endblock %}
