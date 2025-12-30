@@ -20,55 +20,63 @@ def upload_and_analyze(request):
     if request.method == "POST":
         form = AnalysisUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            analysis: Analysis = form.save(commit=False)
-            analysis.save()  # save first so image has a URL
-
-            model = os.getenv("OPENAI_MODEL", "gpt-4o")
-            image_path = analysis.image.path
-
             try:
+                # 1. Save to DB first to generate file path
+                analysis: Analysis = form.save(commit=False)
+                analysis.save()
+                print(f"DEBUG [Analysis {analysis.pk}]: Saved to DB. Image: {analysis.image.path}")
+
+                # 2. Prepare for analysis
+                model = os.getenv("OPENAI_MODEL", "gpt-4o")
+                image_path = analysis.image.path
+
+                # 3. Call AI Engine
                 result = analyze_conar_image_from_file(
                     image_path=image_path,
                     model=model,
                 )
+                
+                # 4. Success handling
                 analysis.global_status = result.get("global", {}).get("status", "yellow")
                 analysis.result_json = result
-            except Exception as e:
-                # Fail-safe: store an actionable error in the same schema-ish shape
-                analysis.global_status = "yellow"
-                analysis.result_json = {
-                    "global": {
-                        "status": "yellow",
-                        "summary": "Analysis failed. Please try again or verify image accessibility.",
-                    },
-                    "cards": [
-                        {
-                            "id": "conar",
-                            "title": "CONAR (Brasil) – Advertising Self-Regulation",
-                            "status": "yellow",
-                            "checks": {
-                                "has_18_plus_warning": False,
-                                "has_responsible_gambling": False,
-                                "mentions_easy_money": False,
-                                "targets_minors": False,
-                                "glamorizes_wealth": False,
-                                "uses_urgency_pressure": False,
-                                "minimizes_risk": False,
-                            },
-                            "findings": [
-                                {
-                                    "severity": "medium",
-                                    "what": "Erro ao processar a análise automática.",
-                                    "why": f"A ferramenta não conseguiu acessar/analisar a imagem. Detalhe: {str(e)[:160]}",
-                                    "fix": "Tente novamente. Se estiver em produção, garanta que a imagem esteja em URL pública (ex: S3/R2).",
-                                }
-                            ],
-                        }
-                    ],
-                }
+                analysis.save()
+                return redirect(reverse("analysis_detail", kwargs={"pk": analysis.pk}))
 
-            analysis.save()
-            return redirect(reverse("analysis_detail", kwargs={"pk": analysis.pk}))
+            except Exception as e:
+                # Log the full error to Railway console
+                print("CRITICAL ERROR IN ANALYZE VIEW:")
+                import traceback
+                traceback.print_exc()
+
+                # If analysis exists, try to update it with the error
+                if 'analysis' in locals() and analysis.pk:
+                    analysis.global_status = "yellow"
+                    analysis.result_json = {
+                        "global": {
+                            "status": "yellow",
+                            "summary": "System Error during analysis.",
+                        },
+                        "cards": [{
+                            "id": "error",
+                            "title": "Erro de Sistema",
+                            "status": "red",
+                            "findings": [{
+                                "severity": "high",
+                                "what": "Falha no processamento",
+                                "why": f"Erro interno: {str(e)}",
+                                "fix": "Verifique os logs do servidor."
+                            }]
+                        }]
+                    }
+                    try:
+                        analysis.save()
+                        return redirect(reverse("analysis_detail", kwargs={"pk": analysis.pk}))
+                    except:
+                        # If we can't even save the error state, fall through
+                        pass
+                
+                # Fallback if DB save failed or update failed
+                form.add_error(None, f"Ocorreu um erro interno: {str(e)}")
     else:
         form = AnalysisUploadForm()
 
